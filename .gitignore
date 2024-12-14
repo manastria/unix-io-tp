@@ -76,3 +76,12 @@ dkms.conf
 
 # End of https://www.toptal.com/developers/gitignore/api/c,c++
 
+compteur
+prefixeur
+base_io
+fluxstandard
+numeroteur
+entree.txt
+erreurs.txt
+journal.txt
+sortie.txt

@@ -11,14 +11,10 @@ PROGRAMS = compteur prefixeur base_io fluxstandard numeroteur
 # La première cible est celle par défaut (exécutée quand on tape juste 'make')
 all: $(PROGRAMS)
 
-# Règles de compilation pour chaque programme
-prog1: src/base_io.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-compteur: src/compteur.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-prefixeur: src/prefixeur.c
+# Règle générique pour compiler les programmes
+# $@ : correspond au nom de la cible
+# $< : correspond à la première dépendance
+%: src/%.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 # Cible pour nettoyer les fichiers générés
@@ -53,6 +49,15 @@ test: all prepare-test
 install: all
 	mkdir -p ~/bin
 	cp $(PROGRAMS) ~/bin/
+
+# Ajouter les exécutables générés dans .gitignore
+update-gitignore:
+	@for prog in $(PROGRAMS); do \
+		if ! grep -q "^$$prog$$" .gitignore; then \
+			echo $$prog >> .gitignore; \
+			echo "Ajouté $$prog à .gitignore"; \
+		fi \
+	done
 
 # Indique que ces cibles ne correspondent pas à des fichiers
 .PHONY: all clean rebuild prepare-test test install
