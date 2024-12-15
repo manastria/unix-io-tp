@@ -98,6 +98,7 @@ void generer_evenement(UserState* etats, int heure, int minute, int mode_realist
             if (etats[user_idx].connexion_echouee >= 3) {
                 fprintf(stderr, "Alert: Multiple failed login attempts for %s from %s\n",
                         USERS[user_idx], ip);
+                fflush(stderr);
             }
         } else {
             etats[user_idx].est_connecte = 1;
@@ -129,7 +130,6 @@ void generer_attaque_eve(int heure, int minute) {
                timestamp, ip,
                FILES[rand() % NB_FILES],
                STATUS[rand() % 10 == 0 ? 0 : 2]);  // 10% de succès
-        
         fflush(stdout);
 
         if (i == 4) {
@@ -155,6 +155,7 @@ void generer_scenario_attaque(const Scenario* scenario) {
         printf("%s %s %s LOGIN %s ERROR\n",
                timestamp, ip, scenario->attaquant,
                FILES[rand() % NB_FILES]);
+        fflush(stdout);
     }
     
     // Phase 2: Exploitation
@@ -162,7 +163,8 @@ void generer_scenario_attaque(const Scenario* scenario) {
     generer_timestamp(timestamp, scenario->heure_debut + 1, 0, 0);
     printf("%s %s %s LOGIN /etc/passwd SUCCESS\n",
            timestamp, ip, scenario->attaquant);
-    
+    fflush(stdout);
+
     // Phase 3: Actions malveillantes
     const char* actions_malveillantes[] = {
         "VIEW /etc/passwd",
@@ -176,10 +178,12 @@ void generer_scenario_attaque(const Scenario* scenario) {
         printf("%s %s %s %s SUCCESS\n",
                timestamp, ip, scenario->attaquant,
                actions_malveillantes[i]);
+        fflush(stdout);
     }
     
     fprintf(stderr, "ALERT: Possible intrusion detected from %s\n", ip);
     fprintf(stderr, "ALERT: Sensitive files accessed by %s\n", scenario->attaquant);
+    fflush(stderr);
 }
 
 int main(int argc, char* argv[]) {
