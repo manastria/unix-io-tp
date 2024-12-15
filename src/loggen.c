@@ -110,6 +110,8 @@ void generer_evenement(UserState* etats, int heure, int minute, int mode_realist
            ACTIONS[action_idx], FILES[file_idx],
            STATUS[status_idx]);
     
+    fflush(stdout);
+
     etats[user_idx].derniere_action = time(NULL);
     strcpy(etats[user_idx].derniere_ip, ip);
 }
@@ -128,10 +130,15 @@ void generer_attaque_eve(int heure, int minute) {
                FILES[rand() % NB_FILES],
                STATUS[rand() % 10 == 0 ? 0 : 2]);  // 10% de succès
         
+        fflush(stdout)
+
         if (i == 4) {
             fprintf(stderr, "ALERT [%02d:%02d:%02d] Multiple failed login attempts from %s\n",
                     heure, minute, i * 10, ip);
+            fflush(stderr)
         }
+
+        
     }
 }
 
