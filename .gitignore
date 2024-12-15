@@ -81,6 +81,7 @@ prefixeur
 base_io
 fluxstandard
 numeroteur
+loggen
 entree.txt
 erreurs.txt
 journal.txt

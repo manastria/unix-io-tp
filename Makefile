@@ -6,7 +6,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g
 
 # Définition des programmes à compiler
-PROGRAMS = compteur prefixeur base_io fluxstandard numeroteur 
+PROGRAMS = compteur prefixeur base_io fluxstandard numeroteur loggen
 
 # La première cible est celle par défaut (exécutée quand on tape juste 'make')
 all: $(PROGRAMS)
